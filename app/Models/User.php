@@ -42,4 +42,39 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function friends()
+    {
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function sentFriendRequests()
+    {
+        return $this->hasMany(FriendRequest::class, 'sender_id');
+    }
+
+    public function hasSentFriendRequestTo(User $user)
+    {
+        return $this->sentFriendRequests->where('receiver_id', $user->id)->count() > 0;
+    }
+    
+    public function isFriendWith(User $user)
+    {
+        return $this->friends->contains($user);
+    }
 }
