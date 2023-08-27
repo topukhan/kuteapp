@@ -1,9 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Friend List') }}
+            {{ __('Friend List ') }}
         </h2>
     </x-slot>
+
 
     <div class="py-12 px-4 mx-auto max-w-xl">
         <div class="py-8 px-4 max-w-xl mx-auto">
@@ -26,11 +27,12 @@
                 @forelse ($receivedRequests as $request)
                     <li class="flex items-center justify-between border-b border-gray-300 py-2">
                         <span>{{ $request->sender->name }}</span>
-                        <form action="{{ route('acceptFriendRequest', ['user' => $request->sender->id]) }}" method="POST">
+                        <form action="{{ route('acceptFriendRequest', ['user' => $request->sender->id]) }}"
+                            method="POST">
                             @csrf
                             <button class="bg-green-500 text-white px-3 py-1 rounded-md" type="submit">Accept</button>
                         </form>
-                        
+
                     </li>
                 @empty
                     <p>No friend requests.</p>
