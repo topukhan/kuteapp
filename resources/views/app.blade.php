@@ -33,9 +33,13 @@
                 <a href="{{ route('posts.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow">Create
                     Post</a>
                 <!-- Button to send a friend request -->
-                <a href="{{route('friendList')}}" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow"> Friends</a>
-                <button class="bg-black text-white px-2 py-2 rounded-lg shadow">Notifications 
-                    <span class="bg-white text-black px-2 ml-1 rounded-md ">3</span></button>
+                <a href="{{ route('friendList') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow">
+                    Friends</a>
+                <a href="{{route('notifications')}}" class="bg-black text-white px-2 py-2 rounded-lg shadow">Notifications
+                    <span class="bg-white text-black px-2 ml-1 rounded-md ">
+                        {{ count(auth()->user()->notifications) }}
+                    </span>
+                </a>
             </div>
         </div>
         <!-- Placeholder content for posts and notifications -->
@@ -54,7 +58,7 @@
                     <span class="text-sm text-gray-600">{{ count($post->likes) }} Likes</span>
                     <span class="text-sm text-gray-600 mx-4">{{ count($post->comments) }} Comments</span>
                     <div class="my-2 flex space-x-4 justify-between">
-                        
+
                         @if (!$post->likes->contains('user_id', auth()->user()->id))
                             <form action="{{ route('posts.like', ['post' => $post->id]) }}" method="POST">
                                 @csrf
@@ -78,16 +82,17 @@
                     <div class="relative">
                         <form action="{{ route('comments.store', ['post' => $post->id]) }}" method="POST">
                             @csrf
-                            <input class="rounded-full w-full h-fit border-gray-400 pl-4 pr-12 py-2" type="text" name="comment"
-                                id="comment" placeholder="Write a comment...">
-                            <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-500 hover:text-blue-700"
+                            <input class="rounded-full w-full h-fit border-gray-400 pl-4 pr-12 py-2" type="text"
+                                name="comment" id="comment" placeholder="Write a comment...">
+                            <button
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-500 hover:text-blue-700"
                                 type="submit">
                                 Submit
                             </button>
                         </form>
                     </div>
-                    <x-input-error :messages="$errors->first('comment')"  class="text-red-500 mt-2 font-semibold"/>
-                    
+                    <x-input-error :messages="$errors->first('comment')" class="text-red-500 mt-2 font-semibold" />
+
                 </div>
             </div>
         @empty

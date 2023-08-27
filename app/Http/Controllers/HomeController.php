@@ -58,5 +58,9 @@ class HomeController extends Controller
     
         return view('friend.friendList', compact('friends', 'receivedRequests', 'nonFriends'));
     }
+
+    public function notifications(){
+        return view('notification.notification');
+    }
     
 }

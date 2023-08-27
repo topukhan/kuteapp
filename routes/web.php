@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
     //Friend Request 
     Route::post('/friendList/{user}/send-request', [FriendController::class, 'sendFriendRequest'])->name('sendFriendRequest');
     Route::post('/friendList/{user}/accept-request', [FriendController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
+    //Notifications
+    Route::get('/app/notifications', [HomeController::class, 'notifications'])->name('notifications');
 
 
 

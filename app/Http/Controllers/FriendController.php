@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FriendRequest;
 use App\Models\User;
+use App\Notifications\FriendRequestNotification;
 use Illuminate\Http\Request;
 
 class FriendController extends Controller
@@ -20,6 +21,7 @@ class FriendController extends Controller
                 $friendRequest->receiver_id = $user->id;
                 $friendRequest->save();
                 // Optionally, you can add a notification here to notify the receiver about the friend request.
+                $user->notify(new FriendRequestNotification($currentUser));
 
                 return redirect()->back();
             }
@@ -48,7 +50,8 @@ class FriendController extends Controller
                     $friendRequest->delete();
     
                     // Optionally, you can add a notification here to notify the sender that the request was accepted.
-    
+                    $currentUser->notify(new FriendRequestNotification($user, true));
+
                     return redirect()->back()->with('success', 'Friend request accepted.');
                 } else {
                     return redirect()->back()->with('error', 'You are already friends.');
