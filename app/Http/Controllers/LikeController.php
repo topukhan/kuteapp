@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Like;
 use App\Models\Post;
+use App\Notifications\LikeNotification;
 use Illuminate\Http\Request;
 
 class LikeController extends Controller
@@ -17,6 +18,7 @@ class LikeController extends Controller
                 $like->user_id = $user->id;
                 $post->likes()->save($like);
             }
+            $post->user->notify(new LikeNotification($user, $post, 'like'));
             return redirect()->back();
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
@@ -31,6 +33,8 @@ class LikeController extends Controller
             if ($like) {
                 $like->delete();
             }
+
+            $post->user->notify(new LikeNotification($user, $post, 'unlike'));
             return redirect()->back();
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());

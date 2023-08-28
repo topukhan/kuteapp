@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/markAsRead/{id}', [HomeController::class, 'markAsRead'])->name('markAsRead');
     //App
     Route::get('/app', [HomeController::class, 'app'])->name('app');
+    Route::get('/post/details/{post}', [HomeController::class, 'details'])->name('post.details');
 
     // Post Controller
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
@@ -60,6 +61,8 @@ Route::middleware('auth')->group(function () {
     //Friend Request 
     Route::post('/friendList/{user}/send-request', [FriendController::class, 'sendFriendRequest'])->name('sendFriendRequest');
     Route::post('/friendList/{user}/accept-request', [FriendController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
+    Route::post('/remove-friend/{user}', [FriendController::class, 'removeFriend'])->name('removeFriend');
+
     //Notifications
     Route::get('/app/notifications', [HomeController::class, 'notifications'])->name('notifications');
 

@@ -38,7 +38,7 @@ class HomeController extends Controller
 
     public function app()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at', 'Desc')->get();
         return view('app', compact('posts'));
     }
 
@@ -61,6 +61,10 @@ class HomeController extends Controller
 
     public function notifications(){
         return view('notification.notification');
+    }
+
+    public function details (Post $post){
+        return view('post.details', compact('post'));
     }
     
 }

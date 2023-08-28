@@ -35,7 +35,8 @@
                 <!-- Button to send a friend request -->
                 <a href="{{ route('friendList') }}" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow">
                     Friends</a>
-                <a href="{{route('notifications')}}" class="bg-black text-white px-2 py-2 rounded-lg shadow">Notifications
+                <a href="{{ route('notifications') }}"
+                    class="bg-black text-white px-2 py-2 rounded-lg shadow">Notifications
                     <span class="bg-white text-black px-2 ml-1 rounded-md ">
                         {{ count(auth()->user()->notifications) }}
                     </span>
@@ -50,51 +51,53 @@
         @forelse ($posts as $post)
             {{-- @dd($post) --}}
             <div class="bg-white rounded-lg shadow p-2 my-3">
-                <div class="  mb-2 px-4">
-                    <p class="text-gray-600 py-4">
-                        <strong>{{ $post->user->name }}:</strong> <br>
-                        "{{ $post->content }}"
-                    </p>
-                    <span class="text-sm text-gray-600">{{ count($post->likes) }} Likes</span>
-                    <span class="text-sm text-gray-600 mx-4">{{ count($post->comments) }} Comments</span>
-                    <div class="my-2 flex space-x-4 justify-between">
+                    <a href="{{ route('post.details', $post) }}">
+                    <div class="  mb-2 px-4">
+                        <p class="text-gray-600 py-4">
+                            <strong>{{ $post->user->name }}:</strong> <br>
+                            "{{ $post->content }}"
+                        </p>
+                        <span class="text-sm text-gray-600">{{ count($post->likes) }} Likes</span>
+                        <span class="text-sm text-gray-600 mx-4">{{ count($post->comments) }} Comments</span>
+                        <div class="my-2 flex space-x-4 justify-between">
 
-                        @if (!$post->likes->contains('user_id', auth()->user()->id))
-                            <form action="{{ route('posts.like', ['post' => $post->id]) }}" method="POST">
-                                @csrf
-                                <button type="submit"
-                                    class="text-white bg-purple-600 hover:bg-purple-800 px-3 rounded-md">
-                                    Like
-                                </button>
-                            </form>
-                        @else
-                            <form action="{{ route('posts.unlike', ['post' => $post->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="text-white bg-purple-600 hover:bg-purple-800 px-3 rounded-md">
-                                    Unlike
-                                </button>
-                            </form>
-                        @endif
-                        <button class="text-blue-500 hover:underline">Share</button>
+                            @if (!$post->likes->contains('user_id', auth()->user()->id))
+                                <form action="{{ route('posts.like', ['post' => $post->id]) }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="text-white bg-purple-600 hover:bg-purple-800 px-3 rounded-md">
+                                        Like
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('posts.unlike', ['post' => $post->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-white bg-purple-600 hover:bg-purple-800 px-3 rounded-md">
+                                        Unlike
+                                    </button>
+                                </form>
+                            @endif
+                            <button class="text-blue-500 hover:underline">Share</button>
+                        </div>
+                        
                     </div>
-                    <div class="relative">
-                        <form action="{{ route('comments.store', ['post' => $post->id]) }}" method="POST">
-                            @csrf
-                            <input class="rounded-full w-full h-fit border-gray-400 pl-4 pr-12 py-2" type="text"
-                                name="comment" id="comment" placeholder="Write a comment...">
-                            <button
-                                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-500 hover:text-blue-700"
-                                type="submit">
-                                Submit
-                            </button>
-                        </form>
-                    </div>
-                    <x-input-error :messages="$errors->first('comment')" class="text-red-500 mt-2 font-semibold" />
-
+                </a>
+                <div class="relative">
+                    <form action="{{ route('comments.store', ['post' => $post->id]) }}" method="POST">
+                        @csrf
+                        <input class="rounded-full w-full h-fit border-gray-400 pl-4 pr-12 py-2" type="text"
+                            name="comment" id="comment" placeholder="Write a comment...">
+                        <button
+                            class="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-500 hover:text-blue-700"
+                            type="submit">
+                            Submit
+                        </button>
+                    </form>
                 </div>
-            </div>
+                <x-input-error :messages="$errors->first('comment')" class="text-red-500 mt-2 font-semibold" />
+                </div>
         @empty
             <div class="mt-2 flex space-x-4">
                 No Post Available
