@@ -69,7 +69,7 @@
                         @endif
                     </li>
                 @empty
-                    <p>No friend requests.</p>
+                    <p>No Users Found.</p>
                 @endforelse
             </ul>
         </div>

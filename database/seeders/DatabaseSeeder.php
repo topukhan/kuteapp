@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         // Manually define and insert 10 user records
         User::create([
             'name' => 'Student 1',
-            'email' => 'student1@gmail.com',
+            'email' => 'student@gmail.com',
             'password' => bcrypt(12345678),
         ]);
 
