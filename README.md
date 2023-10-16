@@ -1,6 +1,6 @@
-# Notification Implementation in Laravel App
+# Social Media App with Notification Implementation in Laravel
 
-This is a basic guide to the notification implementation in a Laravel app. This app allows users to create posts, like posts, comment on posts, and manage friend requests. The primary focus of this README is on implementing notifications.
+This app allows users to create posts, like posts, comment on posts, and manage friend requests. The primary focus of this README is on implementing notifications.
 
 ## Features
 
