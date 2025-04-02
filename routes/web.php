@@ -6,9 +6,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Livewire\Counter;
 use App\Livewire\Posts\CreatePost;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,14 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    //components
-    Route::get('/counter', Counter::class,);
-    Route::get('/create-post', CreatePost::class,);
-    //home controller 
+    // components
+    Route::get('/counter', Counter::class);
+    Route::get('/create-post', CreatePost::class);
+    // home controller
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::get('/notify', [HomeController::class, 'notify'])->name('notify');
     Route::get('/markAsRead/{id}', [HomeController::class, 'markAsRead'])->name('markAsRead');
-    //App
+    // App
     Route::get('/app', [HomeController::class, 'app'])->name('app');
     Route::get('/post/details/{post}', [HomeController::class, 'details'])->name('post.details');
 
@@ -53,21 +53,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts/{post}/like', [LikeController::class, 'like'])->name('posts.like');
     Route::delete('/posts/{post}/unlike', [LikeController::class, 'unlike'])->name('posts.unlike');
 
-    //Comment Controller 
+    // Comment Controller
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
     // Friend List
     Route::get('/friendList', [HomeController::class, 'friendList'])->name('friendList');
-    //Friend Request 
+    // Friend Request
     Route::post('/friendList/{user}/send-request', [FriendController::class, 'sendFriendRequest'])->name('sendFriendRequest');
     Route::post('/friendList/{user}/accept-request', [FriendController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
     Route::post('/remove-friend/{user}', [FriendController::class, 'removeFriend'])->name('removeFriend');
 
-    //Notifications
+    // Notifications
     Route::get('/app/notifications', [HomeController::class, 'notifications'])->name('notifications');
-
-
 
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

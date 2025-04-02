@@ -72,7 +72,7 @@ class User extends Authenticatable
     {
         return $this->sentFriendRequests->where('receiver_id', $user->id)->count() > 0;
     }
-    
+
     public function isFriendWith(User $user)
     {
         return $this->friends->contains($user);

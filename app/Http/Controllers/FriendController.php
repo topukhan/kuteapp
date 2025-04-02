@@ -15,8 +15,8 @@ class FriendController extends Controller
 
         try {
             // Check if a friend request already exists or if the users are already friends.
-            if (!$currentUser->hasSentFriendRequestTo($user) && !$currentUser->isFriendWith($user)) {
-                $friendRequest = new FriendRequest();
+            if (! $currentUser->hasSentFriendRequestTo($user) && ! $currentUser->isFriendWith($user)) {
+                $friendRequest = new FriendRequest;
                 $friendRequest->sender_id = $currentUser->id;
                 $friendRequest->receiver_id = $user->id;
                 $friendRequest->save();
@@ -40,7 +40,7 @@ class FriendController extends Controller
         try {
             if ($friendRequest) {
                 // Check if the friendship already exists to avoid duplicates
-                if (!$currentUser->isFriendWith($user)) {
+                if (! $currentUser->isFriendWith($user)) {
                     // Create the friendship relationship between users
                     $currentUser->friends()->attach($user->id);
                     $user->friends()->attach($currentUser->id);
@@ -56,13 +56,14 @@ class FriendController extends Controller
                     return redirect()->back()->with('error', 'You are already friends.');
                 }
             }
+
             return redirect()->back();
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
-    //remove friend from friend list
+    // remove friend from friend list
     public function removeFriend(User $user)
     {
         $currentUser = auth()->user();

@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 ">
+        {{-- <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 ">
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="mt-3 space-y-1">
                     <!-- Logout button with a form -->
@@ -13,7 +13,7 @@
                     </form>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
         <div class="flex justify-between h-16">
             <div class="flex">
@@ -46,7 +46,7 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('notifications')" :active="request()->routeIs('notifications')">
                         {{ __('Notification ') }}
-                            {{ count(auth()->user()->notifications) }}
+                            <span class="bg-red-500 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ml-1 px-1">{{ count(auth()->user()->notifications) }}</span>
                         
                     </x-nav-link>
                 </div>

@@ -4,14 +4,15 @@ namespace App\Notifications;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class FriendRequestNotification extends Notification
 {
     use Queueable;
+
     protected $sender;
+
     protected $accepted;
 
     /**

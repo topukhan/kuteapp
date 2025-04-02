@@ -3,14 +3,15 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class UserFollowNotification extends Notification
 {
     use Queueable;
+
     public $user;
+
     /**
      * Create a new notification instance.
      */
@@ -35,9 +36,9 @@ class UserFollowNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -48,9 +49,9 @@ class UserFollowNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'user_id' =>$this->user['id'],
-            'name' =>$this->user['name'],
-            'email' =>$this->user['email']
+            'user_id' => $this->user['id'],
+            'name' => $this->user['name'],
+            'email' => $this->user['email'],
         ];
     }
 }

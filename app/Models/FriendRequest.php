@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class FriendRequest extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'sender_id',
-        'receiver_id'
+        'receiver_id',
     ];
 
     public function sender()

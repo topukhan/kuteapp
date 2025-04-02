@@ -5,16 +5,19 @@ namespace App\Notifications;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class LikeNotification extends Notification
 {
     use Queueable;
+
     protected $sender;
+
     protected $post;
+
     protected $status;
+
     /**
      * Create a new notification instance.
      */

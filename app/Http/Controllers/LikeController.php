@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LikeMail;
 use App\Models\Like;
 use App\Models\Post;
 use App\Notifications\LikeNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class LikeController extends Controller
 {
@@ -13,12 +15,16 @@ class LikeController extends Controller
     {
         $user = auth()->user();
         try {
-            if (!$post->likes->contains($user)) {
-                $like = new Like();
+            if (! $post->likes->contains($user)) {
+                $like = new Like;
                 $like->user_id = $user->id;
                 $post->likes()->save($like);
             }
-            $post->user->notify(new LikeNotification($user, $post, 'like'));
+            if ($post->user != $user) {
+                $post->user->notify(new LikeNotification($user, $post, 'like'));
+                Mail::to($post->user?->email)->send(new LikeMail($user, $post, 'like'));
+            }
+
             return redirect()->back();
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
@@ -34,7 +40,6 @@ class LikeController extends Controller
                 $like->delete();
             }
 
-            $post->user->notify(new LikeNotification($user, $post, 'unlike'));
             return redirect()->back();
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());

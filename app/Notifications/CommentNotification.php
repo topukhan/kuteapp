@@ -4,15 +4,17 @@ namespace App\Notifications;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class CommentNotification extends Notification
 {
     use Queueable;
+
     protected $sender;
+
     protected $post_id;
+
     /**
      * Create a new notification instance.
      */
@@ -39,9 +41,9 @@ class CommentNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -54,7 +56,7 @@ class CommentNotification extends Notification
         return [
             'sender_name' => $this->sender->name,
             'sender_id' => $this->sender->id,
-            'receiver_name' => $notifiable->name, 
+            'receiver_name' => $notifiable->name,
             'receiver_id' => $notifiable->id,
             'post_id' => $this->post_id,
         ];

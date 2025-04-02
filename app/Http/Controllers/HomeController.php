@@ -6,8 +6,6 @@ use App\Models\FriendRequest;
 use App\Models\Post;
 use App\Models\User;
 use App\Notifications\UserFollowNotification;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -33,12 +31,14 @@ class HomeController extends Controller
         if ($id) {
             auth()->user()->notifications->where('id', $id)->markAsRead();
         }
+
         return back();
     }
 
     public function app()
     {
         $posts = Post::orderBy('created_at', 'Desc')->get();
+
         return view('app', compact('posts'));
     }
 
@@ -46,25 +46,26 @@ class HomeController extends Controller
     {
         $user = auth()->user();
         $friends = $user->friends;
-    
+
         // Fetch received friend requests
         $receivedRequests = FriendRequest::where('receiver_id', $user->id)
             ->with('sender') // Eager load the sender's information
             ->get();
-    
+
         $nonFriends = User::whereNotIn('id', $friends->pluck('id'))
             ->where('id', '!=', $user->id)
             ->get();
-    
+
         return view('friend.friendList', compact('friends', 'receivedRequests', 'nonFriends'));
     }
 
-    public function notifications(){
+    public function notifications()
+    {
         return view('notification.notification');
     }
 
-    public function details (Post $post){
+    public function details(Post $post)
+    {
         return view('post.details', compact('post'));
     }
-    
 }
